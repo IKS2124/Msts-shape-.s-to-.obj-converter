@@ -1,0 +1,61 @@
+HOW TO GET THE WINDOWS .EXE
+=============================
+
+A .exe has to be built by *some* computer that has Python on it - that's
+just how PyInstaller works. But that computer doesn't have to be yours.
+Option A below builds it for free in the cloud (GitHub's servers) - you
+only need a web browser and a free GitHub account, nothing installed
+on your PC.
+
+--------------------------------------------------------------------
+OPTION A - No installs on your PC: let GitHub build it for you
+--------------------------------------------------------------------
+1. Go to https://github.com and sign up (free) if you don't have an
+   account.
+2. Click the "+" in the top right -> "New repository". Name it
+   anything (e.g. "msts-converter"). Keep it Public. Create it.
+3. On the new repo's page, click "Add file" -> "Upload files".
+4. Drag in ALL the files and folders from this zip, INCLUDING the
+   hidden ".github" folder (it contains the build instructions for
+   GitHub - if your drag-and-drop doesn't pick up hidden folders,
+   use "choose your files" and navigate into .github\workflows\
+   to upload build.yml into that exact path manually).
+5. Click "Commit changes".
+6. Click the "Actions" tab at the top of the repo. You should see a
+   workflow run starting automatically (or click "Build Windows EXE"
+   on the left, then "Run workflow" if it didn't start by itself).
+7. Wait about 1-2 minutes for the green checkmark.
+8. Click into the finished run, scroll down to "Artifacts", and
+   download "MSTS_to_OBJ_Converter-windows-exe". That's a small zip
+   containing your .exe - unzip it and you're done.
+
+This costs nothing - GitHub gives every account free build minutes,
+and this build takes well under a minute of that.
+
+--------------------------------------------------------------------
+OPTION B - Build it yourself on a Windows PC with Python
+--------------------------------------------------------------------
+1. Install Python from https://python.org (tick "Add python.exe to
+   PATH" on the first screen), OR if you have Windows 11's winget,
+   open a terminal and run:
+       winget install -e --id Python.Python.3.12
+   OR install it free from the Microsoft Store (search "Python 3.12").
+2. Put app.py, s_converter.py, requirements.txt and build.bat in one
+   folder.
+3. Double-click build.bat.
+4. Your .exe appears in the new "dist" folder.
+
+--------------------------------------------------------------------
+Notes
+--------------------------------------------------------------------
+* "--windowed" hides the console window (this is a GUI app).
+* "--onefile" bundles numpy etc. into one .exe. First launch is a
+  little slower than later launches - PyInstaller unpacks itself to a
+  temp folder on first run each time, that's normal.
+* Windows SmartScreen may warn "unrecognised app" the first time you
+  run any freshly-built, unsigned .exe. Click "More info" -> "Run
+  anyway". This is expected for any home-built .exe, not a problem
+  with this one specifically.
+* The conversion engine (s_converter.py) was tested against a real
+  115 MB uncompressed .s file before being wrapped in this app - see
+  CONVERSION_TEST_LOG.txt for the actual console output.
